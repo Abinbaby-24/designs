@@ -1,3 +1,5 @@
+import { useEffect, useRef } from 'react'
+
 const points = [
   'Responsive on mobile, tablet, and desktop',
   'Modern, brand-focused visual design',
@@ -6,16 +8,30 @@ const points = [
 ]
 
 export default function About() {
+  const videoRef = useRef(null)
+
+  // Respect visitors who have "reduce motion" turned on: show a still frame instead of autoplay
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      videoRef.current?.pause()
+    }
+  }, [])
+
   return (
     <section id="about">
       <div className="wrap about-grid">
         <div className="about-art">
-          <div className="mini-window">
-            <div className="mini-top"><i></i><i></i><i></i></div>
-            <div className="mini-title">Make your next idea<br />real on the web.</div>
-            <div className="mini-line"></div>
-            <div className="mini-line short"></div>
-          </div>
+          <video
+            ref={videoRef}
+            className="about-video"
+            src="/assets/man.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            aria-label="A man writing on glass"
+          />
         </div>
         <div className="about-copy">
           <div className="kicker">Why ABYLUX</div>
