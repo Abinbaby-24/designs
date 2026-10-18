@@ -1,0 +1,635 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Jost:wght@400;500&family=Inter:wght@400;500;600&display=swap");
+
+/* =========================================
+   BASE STYLES
+========================================= */
+
+.ag {
+  box-sizing: border-box;
+
+  --bg: #ffffff;
+  --bg2: #faf7f1;
+  --ink: #2a2a2e;
+  --muted: #66625b;
+  --rose: #b8975a;
+  --rose-d: #8f7036;
+  --line: #eadfca;
+  --card: #fff;
+
+  --serif: "Cormorant Garamond", Georgia, serif;
+  --sans: "Jost", system-ui, sans-serif;
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  line-height: 1.6;
+}
+
+.ag *,
+.ag *::before,
+.ag *::after {
+  box-sizing: inherit;
+}
+
+.ag h1,
+.ag h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  margin: 0;
+}
+
+/* =========================================
+   NAVIGATION
+========================================= */
+
+.ag nav {
+  position: sticky;
+  top: var(--ag-top, 45px);
+  z-index: 11;
+
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 4vw, 36px);
+
+  padding: 14px 16px;
+
+  background: color-mix(
+    in srgb,
+    var(--bg) 92%,
+    transparent
+  );
+
+  backdrop-filter: blur(8px);
+  font-size: 0.82rem;
+}
+
+.ag nav a {
+  color: var(--ink);
+  text-decoration: none;
+  padding-bottom: 4px;
+  border-bottom: 1px solid transparent;
+}
+
+.ag nav a:hover,
+.ag nav a:focus-visible {
+  border-color: var(--rose);
+  outline: none;
+}
+
+.ag a:focus-visible,
+.ag button:focus-visible,
+.ag input:focus-visible,
+.ag select:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 3px;
+}
+
+/* =========================================
+   HERO SECTION
+   Full-width landscape background image
+========================================= */
+
+.ag .hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  width: 100%;
+  max-width: none;
+
+  min-height: min(85vh, 760px);
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+
+  margin: 0 auto;
+}
+
+/* Full-screen image container */
+
+.ag .hero .art {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+
+  z-index: -2;
+  overflow: hidden;
+}
+
+/* Original SVG illustration */
+
+.ag .hero .art svg {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+}
+
+/* Main wedding photograph */
+
+.ag .hero .art .photo {
+  position: absolute;
+  inset: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center 40%;
+
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Soft gradient to keep the invitation text readable */
+
+.ag .hero::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  z-index: -1;
+  pointer-events: none;
+
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 255, 255, 0.84) 25%,
+    rgba(255, 255, 255, 0.52) 42%,
+    rgba(255, 255, 255, 0.08) 65%,
+    transparent 100%
+  );
+}
+
+/* Invitation text */
+
+.ag .hero .txt {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 100%;
+
+  padding: 48px clamp(20px, 6vw, 70px);
+
+  color: var(--ink);
+}
+
+/* Couple's names */
+
+.ag .hero h1 {
+  font-size: clamp(3rem, 7vw, 5.4rem);
+  line-height: 1.02;
+}
+
+/* Decorative dividers */
+
+.ag .rule {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  color: var(--rose);
+
+  margin: 22px 0 14px;
+  max-width: 260px;
+}
+
+.ag .rule::before,
+.ag .rule::after {
+  content: "";
+  flex: 1;
+
+  height: 1px;
+  background: var(--line);
+}
+
+.ag .rule.c {
+  margin-inline: auto;
+}
+
+/* Wedding date */
+
+.ag .date {
+  letter-spacing: 0.2em;
+  color: var(--rose-d);
+  font-weight: 500;
+  font-size: 1rem;
+  margin: 0;
+}
+
+/* Decorative sprig */
+
+.ag .sprig {
+  position: absolute;
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
+
+.ag section {
+  padding: 64px 20px;
+  text-align: center;
+}
+
+.ag .wrap {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.ag h2 {
+  font-size: clamp(2rem, 4vw, 2.6rem);
+}
+
+/* =========================================
+   OUR STORY
+========================================= */
+
+.ag .story {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: clamp(24px, 5vw, 60px);
+  align-items: center;
+
+  text-align: left;
+}
+
+.ag .story .rule {
+  margin-inline: 0;
+}
+
+/* Story image frame */
+
+.ag .frame {
+  background: var(--card);
+
+  padding: 10px;
+  border-radius: 6px;
+
+  border: 1px solid var(--line);
+
+  box-shadow: 0 10px 30px -18px var(--rose);
+}
+
+.ag .frame svg {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  border-radius: 3px;
+}
+
+.ag .frame img {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  border-radius: 3px;
+}
+
+.ag .story p {
+  color: var(--muted);
+
+  max-width: 34ch;
+  margin: 0 0 12px;
+}
+
+/* =========================================
+   WEDDING DETAILS
+========================================= */
+
+.ag .alt {
+  background: var(--bg2);
+}
+
+.ag .details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+
+  margin-top: 32px;
+}
+
+.ag .details div {
+  padding: 8px 16px;
+  border-left: 1px solid var(--line);
+}
+
+.ag .details div:first-child {
+  border-left: 0;
+}
+
+.ag .details svg {
+  width: 30px;
+  height: 30px;
+
+  stroke: var(--rose);
+  fill: none;
+  stroke-width: 1.5;
+
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ag .details strong {
+  display: block;
+
+  font-weight: 500;
+  margin-top: 8px;
+}
+
+.ag .details span {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* =========================================
+   RSVP
+========================================= */
+
+.ag .sub {
+  color: var(--muted);
+  margin: 10px 0 24px;
+}
+
+.ag .btn {
+  background: var(--rose-d);
+  color: #fff;
+
+  border: 0;
+  border-radius: 4px;
+
+  padding: 12px 44px;
+
+  font: 500 0.95rem var(--sans);
+  cursor: pointer;
+}
+
+.ag .btn:hover {
+  background: var(--rose);
+}
+
+.ag form {
+  display: none;
+
+  max-width: 420px;
+  margin: 24px auto 0;
+
+  text-align: left;
+  gap: 14px;
+
+  flex-direction: column;
+}
+
+.ag form.open {
+  display: flex;
+}
+
+.ag label {
+  font-size: 0.85rem;
+  color: var(--muted);
+
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ag input,
+.ag select {
+  font: inherit;
+  color: var(--ink);
+  background: var(--card);
+
+  border: 1px solid var(--line);
+  border-radius: 4px;
+
+  padding: 10px 12px;
+}
+
+.ag .thanks {
+  display: none;
+
+  font-family: var(--serif);
+  font-size: 1.5rem;
+
+  margin-top: 20px;
+  color: var(--rose-d);
+}
+
+/* =========================================
+   GALLERY
+========================================= */
+
+.ag .grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.ag .grid svg {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 1;
+
+  border-radius: 8px;
+}
+
+.ag .grid img {
+  display: block;
+
+  width: 100%;
+  aspect-ratio: 1;
+
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+.ag footer {
+  padding: 36px 20px;
+
+  text-align: center;
+  color: var(--muted);
+
+  font-size: 0.85rem;
+}
+
+/* =========================================
+   BACK TO DEMOS
+========================================= */
+
+.ag .back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: 100%;
+
+  border: 0;
+  border-bottom: 1px solid var(--line);
+
+  background: #fff;
+  color: var(--rose-d);
+
+  font: 600 0.9rem Inter, sans-serif;
+
+  padding: 12px 20px;
+
+  cursor: pointer;
+  text-align: left;
+  text-decoration: none;
+
+  position: sticky;
+  top: 0;
+  z-index: 12;
+}
+
+.ag .back:focus-visible {
+  outline: 3px solid var(--rose-d);
+  outline-offset: 3px;
+}
+
+.ag .demo-tag {
+  margin-left: auto;
+
+  font-weight: 500;
+  color: var(--muted);
+
+  font-size: 0.8rem;
+}
+
+/* =========================================
+   GENERAL HELPERS
+========================================= */
+
+.ag [id] {
+  scroll-margin-top: 60px;
+}
+
+.ag [hidden] {
+  display: none;
+}
+
+/* =========================================
+   MOBILE RESPONSIVENESS
+========================================= */
+
+@media (max-width: 720px) {
+
+  /* Full-width hero on mobile */
+
+  .ag .hero {
+    grid-template-columns: 1fr;
+    min-height: 75vh;
+  }
+
+  /* Keep the photo behind the invitation */
+
+  .ag .hero .art {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+
+  .ag .hero .art .photo {
+    object-position: 65% center;
+
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  /* Lighter overlay for text readability */
+
+  .ag .hero::before {
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.58) 45%,
+      rgba(255, 255, 255, 0.88) 100%
+    );
+  }
+
+  .ag .hero .txt {
+    width: 100%;
+    max-width: 100%;
+
+    text-align: center;
+    padding: 32px 20px;
+  }
+
+  .ag .hero h1 {
+    font-size: clamp(3rem, 12vw, 4.5rem);
+  }
+
+  .ag .rule {
+    margin-inline: auto;
+  }
+
+  /* Our Story */
+
+  .ag .story {
+    grid-template-columns: 1fr;
+  }
+
+  .ag .story .rule {
+    margin-inline: auto;
+  }
+
+  .ag .story div + div,
+  .ag .story .t {
+    text-align: center;
+  }
+
+  .ag .story p {
+    margin-inline: auto;
+  }
+
+  /* Wedding details */
+
+  .ag .details {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .ag .details div {
+    border-left: 0;
+  }
+
+  /* Gallery */
+
+  .ag .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Navigation */
+
+  .ag nav {
+    gap: 16px;
+    padding: 12px 10px;
+    font-size: 0.78rem;
+  }
+}

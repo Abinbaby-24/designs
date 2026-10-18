@@ -1,0 +1,336 @@
+/* ==========================================================================
+   ABYLUX — styles.css
+   Theme: the split hero — warm wedding burgundy + cool business navy, gold accents,
+   Playfair Display headings. Light page, dark navy header.
+   Breakpoints:  980px (pricing stacks)  ·  800px (mobile nav, stacked hero)  ·  540px (small phones)
+
+   Contents
+   1.  Tokens
+   2.  Base
+   3.  Buttons
+   4.  Header & navigation
+   5.  Hero (split)
+   6.  Shared section styles
+   7.  Services
+   8.  About
+   9.  Projects
+   10. Pricing
+   11. FAQ
+   12. Contact
+   13. Footer
+   14. WhatsApp button
+   15. Small-screen overrides
+   ========================================================================== */
+
+
+/* 1. Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  color-scheme: light;
+
+  --nav-h: 78px;
+
+  /* surfaces */
+  --bg: #fbf6f1;            /* warm ivory */
+  --blush: #f7e8e0;         /* wedding tint */
+  --sky: #e8f0f9;           /* business tint */
+  --card: #fffdfb;
+
+  /* text */
+  --ink: #2b1a22;
+  --muted: #6e5d66;
+  --line: #7a1f3a24;
+
+  /* brand */
+  --burgundy: #7a1f3a;
+  --burgundy-dark: #5e1630;
+  --navy: #0d1b2e;
+  --navy-2: #12263f;
+  --gold: #e6b866;
+  --gold-deep: #b98a2e;
+
+  --nav-bg: var(--navy);
+  --serif: "Playfair Display", "Cormorant Garamond", Georgia, "Times New Roman", serif;
+
+  --gold-grad: linear-gradient(110deg, #f3d58e, #d9a84a);
+  --wine-grad: linear-gradient(110deg, #8c2a45, #5e1630);
+}
+
+
+/* 2. Base
+   -------------------------------------------------------------------------- */
+*{box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:smooth}
+body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--burgundy);outline-offset:3px}
+section{padding:88px 0}
+section[id]{scroll-margin-top:var(--nav-h)}
+.wrap{width:min(1120px,calc(100% - 40px));margin:auto}
+
+
+/* 3. Buttons
+   -------------------------------------------------------------------------- */
+.btn,.nav-cta{display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;font-weight:700;transition:transform .2s,box-shadow .2s}
+.btn{padding:15px 28px;border:1px solid transparent}
+.nav-cta{padding:13px 22px}
+.btn:hover,.nav-cta:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--wine-grad);color:#fff;border-color:#d99aae80;box-shadow:0 12px 28px #5e163040}
+.nav-cta{background:var(--gold-grad);color:var(--navy);box-shadow:0 10px 24px #d9a84a40}
+
+
+/* 4. Header & navigation
+   -------------------------------------------------------------------------- */
+header{position:fixed;top:0;left:0;right:0;z-index:20;background:transparent;border-bottom:1px solid transparent;transition:background-color .3s,border-color .3s}
+header.scrolled{background:rgba(13,27,46,.94);backdrop-filter:blur(16px);border-bottom-color:#e6b86640}
+.nav{height:var(--nav-h);display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-actions{display:flex;align-items:center;gap:12px}
+
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand-mark{display:block;flex:none;width:48px;height:48px;object-fit:contain;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35))}
+.brand-name{font-family:var(--serif);font-size:1.5rem;font-weight:600;letter-spacing:.03em;color:#fff;white-space:nowrap;text-shadow:0 1px 12px rgba(13,27,46,.5)}
+
+.navlinks{display:flex;align-items:center;gap:30px;font-size:.91rem;color:#fff;text-shadow:0 1px 10px rgba(13,27,46,.6)}
+.navlinks a{transition:color .2s}
+.navlinks a:hover{color:var(--gold)}
+
+.menu{display:none;border:1px solid rgba(255,255,255,.25);background:transparent;border-radius:12px;padding:10px;color:#fff}
+
+@media(max-width:800px){
+  .navlinks{display:none;position:absolute;top:var(--nav-h);left:0;right:0;padding:20px;background:var(--nav-bg);border-bottom:1px solid #e6b86640;flex-direction:column;gap:22px}
+  .navlinks.open{display:flex}
+  .menu{display:block}
+  .nav-cta{display:none}
+  .nav-actions{margin-left:auto}
+}
+
+
+/* 5. Hero (split)
+   Photos:  public/assets/wedding.png  and  public/assets/company.png
+   Centre logo:  public/assets/design-logo.png
+   The header is transparent over the hero and turns solid navy once the page scrolls.
+   The gradients are the fallback if an image is missing.
+   -------------------------------------------------------------------------- */
+.hero-split{position:relative;display:grid;grid-template-columns:1fr 1fr;height:100vh;height:100svh;min-height:660px;padding:0;overflow:hidden;background:var(--nav-bg)}
+.hero-split:before{content:"";position:absolute;inset:0 0 auto 0;height:180px;background:linear-gradient(rgba(13,27,46,.62),transparent);z-index:2;pointer-events:none}
+.hero-split:after{content:"";position:absolute;left:50%;top:0;bottom:0;width:2px;transform:translateX(-50%);background:linear-gradient(#fff0,#ffffffb0,#fff0);z-index:2;pointer-events:none}
+
+/* panels */
+.split{position:relative;display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(var(--nav-h) + 48px) 28px 48px;overflow:hidden;isolation:isolate}
+.split:before{content:"";position:absolute;inset:0;z-index:-1;background-size:cover;background-position:center;transition:transform 1s ease}
+.split:hover:before{transform:scale(1.04)}
+.split.wedding:before{background:radial-gradient(ellipse 62% 48% at 50% 48%,rgba(255,244,235,.55),transparent 72%),url("/assets/wedding.png") center/cover no-repeat,linear-gradient(160deg,#f7c9a8 0%,#f0a98f 38%,#c97b84 72%,#6b2a3d 100%)}
+.split.business:before{background:radial-gradient(ellipse 62% 48% at 50% 48%,rgba(255,255,255,.6),transparent 72%),url("/assets/company.png") center/cover no-repeat,linear-gradient(170deg,#d6e8f9 0%,#9fbfdc 40%,#4b6a8f 75%,#14233a 100%)}
+
+/* panel content */
+.split-inner{max-width:430px}
+.split-kicker{margin:0;font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600}
+.split h1{font-family:var(--serif);font-size:clamp(3rem,6vw,5.2rem);line-height:1;letter-spacing:-.02em;font-weight:600;margin:14px 0 8px}
+.split-sub{margin:0;font-family:var(--serif);font-size:clamp(1.25rem,2.2vw,1.75rem);font-weight:500}
+.split-rule{display:flex;align-items:center;justify-content:center;gap:14px;margin:20px 0}
+.split-rule:before,.split-rule:after{content:"";width:46px;height:1px;background:currentColor;opacity:.5}
+.split-rule svg{width:18px;height:18px;fill:currentColor}
+.split-copy{margin:0 auto;max-width:340px;font-size:1.02rem;line-height:1.65}
+.split-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;padding:15px 30px;border-radius:999px;font-weight:650;color:#fff;background:transparent;border:1.5px solid rgba(255,255,255,.85);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);text-shadow:0 1px 10px rgba(13,27,46,.55);transition:transform .2s,background-color .2s}
+.split-btn:hover{transform:translateY(-2px)}
+
+/* panel themes */
+.wedding{color:#3a1a24}
+.wedding h1,.wedding .split-sub{color:var(--burgundy)}
+.wedding .split-btn{background:var(--wine-grad);border:1px solid #d99aae80;box-shadow:0 12px 28px #5e163055}
+
+.business{color:#1d2b3f}
+.business h1,.business .split-sub{color:var(--navy)}
+.business .split-btn{background:linear-gradient(110deg,var(--navy-2),#0a1424);border:1px solid #6aaeff80;box-shadow:0 12px 28px #0a142455,0 0 0 3px #6aaeff1f}
+
+/* centre logo */
+.hero-badge{position:absolute;left:50%;top:calc(50% + var(--nav-h) / 2);transform:translate(-50%,-50%);z-index:3;width:150px;line-height:0;pointer-events:none}
+.hero-badge img{display:block;width:100%;height:auto;filter:drop-shadow(0 12px 28px rgba(0,0,0,.45))}
+
+@media(max-width:800px){
+  .hero-split{grid-template-columns:1fr;grid-auto-rows:1fr;height:auto;min-height:0}
+  .hero-split:after{display:none}
+  .split{min-height:470px;padding:56px 22px}
+  .split.wedding{padding-top:calc(var(--nav-h) + 40px)}
+  .hero-badge{width:110px;top:50%}
+}
+@media(prefers-reduced-motion:reduce){
+  .split:before,.split-btn{transition:none}
+}
+
+
+/* 6. Shared section styles
+   Section headings echo the hero: small spaced kicker, serif title, gold divider.
+   -------------------------------------------------------------------------- */
+.section-head{text-align:center;max-width:650px;margin:0 auto 46px}
+.section-head p{color:var(--muted);line-height:1.75}
+.section-head:after{content:"— ◆ —";display:block;margin-top:20px;color:var(--gold-deep);font-size:.8rem;letter-spacing:.4em;padding-left:.4em}
+.kicker{font-size:.76rem;letter-spacing:.24em;text-transform:uppercase;font-weight:600;color:var(--burgundy)}
+h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);line-height:1.1;letter-spacing:-.02em;font-weight:600;margin:13px 0;color:var(--navy)}
+h2 em{font-style:normal;color:var(--burgundy)}
+
+
+/* 7. Services
+   -------------------------------------------------------------------------- */
+.services{background:linear-gradient(180deg,var(--blush),var(--bg))}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;box-shadow:0 14px 40px #5e16300f;transition:transform .25s,border-color .25s,box-shadow .25s}
+.card:hover{border-color:#e6b86690;transform:translateY(-4px);box-shadow:0 20px 48px #5e163018}
+.card h3{font-family:var(--serif);margin:0 0 10px;font-size:1.3rem;font-weight:600;color:var(--navy)}
+.card p{margin:0;color:var(--muted);line-height:1.7;font-size:.94rem}
+
+/* warm / cool icon tiles echo the two hero panels */
+.iconbox{width:50px;height:50px;border-radius:50%;display:grid;place-items:center;font-size:1.3rem;margin-bottom:20px;background:#7a1f3a14;color:var(--burgundy);border:1px solid #7a1f3a2e}
+.card:nth-child(even) .iconbox{background:#12263f14;color:var(--navy-2);border-color:#12263f2e}
+
+@media(max-width:800px){.cards{grid-template-columns:1fr 1fr}}
+
+
+/* 8. About
+   -------------------------------------------------------------------------- */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:55px}
+.about-art{min-height:340px;border-radius:28px;overflow:hidden;position:relative;background:linear-gradient(115deg,#7a1f3a 0%,#c97b84 32%,#f0b49a 52%,#9fbfdc 76%,#12263f 100%);padding:28px;display:flex;align-items:end;box-shadow:0 24px 60px #5e163030}
+.about-copy p{color:var(--muted);line-height:1.8}
+
+.mini-window{width:100%;background:#0d1b2ee0;backdrop-filter:blur(8px);color:#f6efe9;border:1px solid #e6b86649;border-radius:18px;padding:22px;box-shadow:0 20px 60px #0d1b2e55}
+.mini-top{display:flex;gap:5px;margin-bottom:20px}
+.mini-top i{width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.mini-title{font-family:var(--serif);font-size:1.6rem;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.mini-line{height:8px;background:#ffffff24;border-radius:10px;margin-top:10px;width:88%}
+.mini-line.short{width:57%}
+
+.checklist{list-style:none;padding:0;display:grid;gap:13px;margin:25px 0}
+.checklist li:before{content:"✓";display:inline-grid;place-items:center;width:23px;height:23px;border-radius:50%;background:var(--gold-grad);color:var(--burgundy-dark);font-weight:900;font-size:.8rem;margin-right:10px}
+
+@media(max-width:800px){
+  .about-grid{grid-template-columns:1fr;gap:32px}
+  .about-art{min-height:280px}
+}
+
+
+/* 9. Projects
+   -------------------------------------------------------------------------- */
+.projects{background:linear-gradient(180deg,var(--bg),var(--sky))}
+.project-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.project{border:1px solid var(--line);border-radius:22px;overflow:hidden;background:var(--card);box-shadow:0 14px 40px #0d1b2e12}
+.project-visual{height:220px;padding:22px;display:flex;align-items:end;color:#fff}
+.project:nth-child(1) .project-visual{background:linear-gradient(160deg,#f7c9a8 0%,#d98a94 52%,#7a1f3a 100%)}
+.project:nth-child(2) .project-visual{background:linear-gradient(170deg,#cfe3f7 0%,#6f93b8 50%,#0d1b2e 100%)}
+.project-copy{padding:22px}
+.project-copy h3{font-family:var(--serif);margin:0 0 7px;font-size:1.3rem;font-weight:600;color:var(--navy)}
+.project-copy p{margin:0;color:var(--muted);font-size:.92rem}
+
+.browser{width:100%;background:#0d1b2ee6;color:#f6efe9;border-radius:12px 12px 0 0;padding:16px;border:1px solid #e6b86640;border-bottom:0}
+.browser strong{font-family:var(--serif);font-size:1.2rem;font-weight:600}
+.browser span{display:block;color:#b9c4d3;font-size:.75rem;margin-top:5px}
+
+
+/* 10. Pricing
+    Each plan sets its own colours through custom properties (--bd, --bg-g, --sheen, --price, --tick).
+    The cards stay dark on the light page.
+   -------------------------------------------------------------------------- */
+.pricing{background:radial-gradient(720px 380px at 18% 0,#f7d9cb 0,transparent 66%),radial-gradient(720px 380px at 82% 0,#d6e6f6 0,transparent 66%),var(--bg)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;align-items:stretch}
+
+.plan{position:relative;display:flex;flex-direction:column;border-radius:26px;padding:36px 28px 30px;color:#e9e6f5;border:1px solid var(--bd);background:var(--bg-g);box-shadow:0 26px 60px #00000070,inset 0 1px 0 #ffffff1f;transition:transform .25s,box-shadow .25s}
+.plan:before{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(120deg,var(--sheen),transparent 42%);pointer-events:none;z-index:0}
+.plan>*:not(.badge){position:relative;z-index:1}
+.plan:hover{transform:translateY(-6px)}
+.plan.featured{transform:translateY(-10px)}
+.plan.featured:hover{transform:translateY(-16px)}
+
+/* plan variants */
+.plan.silver{--bd:#9aa1ad70;--bg-g:linear-gradient(160deg,#30343d 0%,#17191e 55%,#0e0f12 100%);--sheen:#e5e7eb2b;--price:linear-gradient(90deg,#fff,#9ca3af);--tick:url("/assets/silver-tick.png")}
+.plan.gold{--bd:#f5c15a8c;--bg-g:linear-gradient(160deg,#3d2f12 0%,#1d1608 55%,#100c04 100%);--sheen:#fcd34d2b;--price:linear-gradient(90deg,#fff0b3,#e0a919);--tick:url("/assets/gold-tick.png");box-shadow:0 28px 70px #d9a21b33,0 26px 60px #00000070,inset 0 1px 0 #fde68a40}
+.plan.diamond{--bd:#a78bfa8c;--bg-g:linear-gradient(160deg,#2e1b70 0%,#150d34 55%,#0a0618 100%);--sheen:#c084fc33;--price:linear-gradient(90deg,#f3e8ff,#a78bfa 55%,#67e8f9);--tick:url("/assets/diamond-tick.png")}
+
+/* plan content */
+.badge{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:linear-gradient(110deg,#fde68a,#d9a21b);color:#2a1d02;font-size:.7rem;font-weight:850;letter-spacing:.12em;text-transform:uppercase;padding:6px 15px;border-radius:999px;white-space:nowrap;box-shadow:0 8px 20px #d9a21b44;z-index:2}
+.plan-name{margin:0 0 12px}
+.plan-title-img{display:block;height:46px;width:auto;max-width:100%}
+.plan-tag{color:#b0abc4;font-size:.9rem;margin:0 0 22px;line-height:1.55}
+.price{display:flex;align-items:baseline;gap:6px;line-height:1}
+.price b{font-family:var(--serif);font-size:2.9rem;font-weight:700;letter-spacing:-.02em;background:var(--price);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.price small{font-size:.85rem;font-weight:600;color:#9b97b0}
+.plan hr{border:0;border-top:1px solid #ffffff1f;margin:26px 0}
+.plan ul{list-style:none;padding:0;margin:0 0 30px;display:grid;gap:13px;font-size:.93rem;color:#d8d4e8;flex:1;align-content:start}
+.plan li{display:flex;gap:11px;line-height:1.5}
+.plan li:before{content:"";flex:none;width:22px;height:22px;background:var(--tick) center/contain no-repeat}
+.plan li.inherit{font-weight:750;color:#fff}
+
+/* plan buttons */
+.plan .btn{width:100%;border:0}
+.plan.silver .btn{background:linear-gradient(110deg,#f3f4f6,#9ca3af);color:#12141a;box-shadow:0 10px 24px #9ca3af30}
+.plan.gold .btn{background:linear-gradient(110deg,#fde68a,#d9a21b);color:#2a1d02;box-shadow:0 10px 26px #d9a21b44}
+.plan.diamond .btn{background:linear-gradient(110deg,#c084fc,#6d28d9);color:#fff;box-shadow:0 10px 26px #7c3aed55}
+
+/* !important beats the inline colour still set in Pricing.jsx */
+.pricing-note{text-align:center;color:var(--muted);font-size:.85rem;margin:34px auto 0;max-width:620px;line-height:1.7}
+.pricing-note a{color:var(--burgundy)!important;font-weight:700}
+
+@media(max-width:980px){
+  .plans{grid-template-columns:1fr;max-width:460px;margin:auto}
+  .plan.featured{transform:none;margin-top:10px}
+}
+
+
+/* 11. FAQ
+   -------------------------------------------------------------------------- */
+.faq-list{max-width:780px;margin:auto;display:grid;gap:12px}
+.faq-item{border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden;transition:border-color .2s,box-shadow .2s}
+.faq-item[open]{border-color:#e6b866a0;box-shadow:0 14px 40px #5e163016}
+.faq-item summary{list-style:none;cursor:pointer;padding:20px 24px;font-family:var(--serif);font-size:1.08rem;font-weight:600;color:var(--navy);display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:after{content:"+";flex:none;width:28px;height:28px;border-radius:50%;background:#7a1f3a14;border:1px solid #7a1f3a2e;color:var(--burgundy);display:grid;place-items:center;font-family:Inter,system-ui,sans-serif;font-size:1.15rem;font-weight:600;transition:.2s}
+.faq-item[open] summary:after{content:"–";background:var(--gold-grad);border-color:transparent;color:var(--burgundy-dark)}
+.faq-item p{margin:0;padding:0 24px 22px;color:var(--muted);line-height:1.75}
+
+
+/* 12. Contact
+   Burgundy to navy, the same warm/cool split as the hero.
+   -------------------------------------------------------------------------- */
+.contact{padding:75px 0}
+.contact-panel{border-radius:30px;background:linear-gradient(100deg,#7a1f3a 0%,#5e1630 36%,#12263f 64%,#0d1b2e 100%);color:#fff;padding:54px;display:flex;justify-content:space-between;align-items:center;gap:28px;border:1px solid #e6b86640;box-shadow:0 28px 70px #0d1b2e38}
+.contact-panel h2{margin-top:0;color:#fff}
+.contact-panel h2 em{color:#f3d58e}
+.contact-panel .kicker{color:#f3d58e}
+.contact-panel p{color:#eadde3;line-height:1.7;margin-bottom:0}
+.contact-panel .btn{background:var(--gold-grad);color:var(--navy);white-space:nowrap;box-shadow:0 12px 28px #00000040}
+
+@media(max-width:800px){
+  .contact-panel{padding:34px;align-items:flex-start;flex-direction:column}
+}
+
+
+/* 13. Footer
+   -------------------------------------------------------------------------- */
+footer{border-top:1px solid #e6b86666;padding:28px 0;color:var(--muted);font-size:.85rem}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:18px}
+.footer-brand{font-family:var(--serif);font-weight:700;letter-spacing:.2em;color:var(--burgundy)}
+
+
+/* 14. WhatsApp button
+   -------------------------------------------------------------------------- */
+.wa-float{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:50;width:60px;height:60px;border-radius:50%;background:#25d366;color:#fff;display:grid;place-items:center;box-shadow:0 10px 28px #25d36650,0 6px 18px #00000060;transition:transform .2s}
+.wa-float:hover{transform:scale(1.08)}
+.wa-float svg{width:32px;height:32px;fill:currentColor}
+.wa-float:before{content:"";position:absolute;inset:0;border-radius:50%;background:#25d366;opacity:.5;animation:waPulse 2.2s ease-out infinite;z-index:-1}
+@keyframes waPulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(1.7);opacity:0}}
+@media(prefers-reduced-motion:reduce){.wa-float:before{animation:none}}
+
+
+/* 15. Small-screen overrides (540px and below)
+   -------------------------------------------------------------------------- */
+@media(max-width:540px){
+  :root{--nav-h:70px}
+  .wrap{width:min(100% - 30px,1120px)}
+  section{padding:66px 0}
+  .section-head{margin-bottom:34px}
+  .brand-mark{width:40px;height:40px}
+  .brand-name{font-size:1.25rem}
+  .cards,.project-grid{grid-template-columns:1fr}
+  .contact-panel{padding:28px}
+  .footer-inner{align-items:flex-start;flex-direction:column}
+  .wa-float{width:54px;height:54px;right:16px}
+  .wa-float svg{width:29px;height:29px}
+}
