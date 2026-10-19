@@ -24,7 +24,7 @@ export default function Hero() {
 
         <div className="hero-badge">
           <img
-            src={`${import.meta.env.BASE_URL}assets/ab-logo.png`}
+            src={`${import.meta.env.BASE_URL}assets/emerald-logo.png`}
             alt="ABYLUX"
           />
         </div>

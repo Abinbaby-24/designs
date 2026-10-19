@@ -13,7 +13,7 @@ const links = [
 export default function Header() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const mark = `${import.meta.env.BASE_URL}assets/ab-logo.png`
+  const mark = `${import.meta.env.BASE_URL}assets/emerald-logo.png`
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -27,7 +27,7 @@ export default function Header() {
       <div className="wrap nav">
         <a className="brand" href="#home" aria-label="Rose Designs home">
           <img className="brand-mark" src={mark} alt="" />
-          <span className="brand-name">ABY Designs</span>
+          <span className="brand-name">Emerald Designs</span>
         </a>
         <nav className={`navlinks${open ? ' open' : ''}`} id="navlinks">
           {links.map(([id, label]) => (
