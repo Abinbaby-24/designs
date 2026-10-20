@@ -10,7 +10,7 @@ const PHOTOS = {
   anjaliRohan: "/assets/anjali.png",
   annaGeorge: "/assets/anna.png",
   fathimaRizwan: "/assets/fathima.png",
-  companyWebsite: "",
+  rose: "/assets/rose.png",
   landingPage: "",
   customWebApp: "",
 };
@@ -41,10 +41,10 @@ const WORKS = {
   companies: {
     cta: { label: "Explore business themes", href: "#pricing" },
     items: [
-      { title: "Company Website", text: "Fast, SEO-ready site for a growing business.", image: PHOTOS.companyWebsite, fallback: "linear-gradient(135deg,#4a7bb5,#14233b)", href: "#" },
-      { title: "Landing Page", text: "Focused page built to turn visitors into enquiries.", image: PHOTOS.landingPage, fallback: "linear-gradient(135deg,#7fb4d6,#2a4a73)", href: "#" },
-      { title: "Custom Web App", text: "Dashboard and workflow tool shaped around the team.", image: PHOTOS.customWebApp, fallback: "linear-gradient(135deg,#9aa8bd,#1c2f4d)", href: "#" },
-    ],
+      { title: "Rose Beauty Parlour", text: "A Proffesional beauty salon.", image: PHOTOS.rose, fallback: "linear-gradient(135deg,#4a7bb5,#14233b)", href: "https://www.rosebeautyparlour.online/" },
+    ],/* { title: "Star Industries", text: "Focused page built to turn visitors into enquiries.", image: PHOTOS.landingPage, fallback: "linear-gradient(135deg,#7fb4d6,#2a4a73)", href: "#" },
+      { title: "Green House Appliances", text: "Dashboard and workflow tool shaped around the team.", image: PHOTOS.customWebApp, fallback: "linear-gradient(135deg,#9aa8bd,#1c2f4d)", href: "#" },
+    ],*/
     services: {
       title: "Business & brand services",
       sub: "Websites and tools that help your company grow.",
