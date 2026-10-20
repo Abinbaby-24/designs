@@ -1,6 +1,6 @@
 const faqs = [
-  ['How much does a website cost?', 'Our website packages start at ₹3,999, depending on the features and requirements.'],
-  ['How long does it take to build a website?', 'A basic website may take 3–5 days, while more complex projects may take longer.'],
+  ['How much does a website cost?', 'Our website packages start at ₹4,999, depending on the features and requirements.'],
+  ['How long does it take to build a website?', 'A basic website may take 8–10 days, while more complex projects may take longer.'],
   ['Do I need to pay monthly?', 'Website development is a one-time project fee. Domain, hosting, paid services, and optional maintenance may involve additional charges.'],
   ['Can customers book appointments through my website?', 'Yes. Depending on your requirements, we can integrate WhatsApp appointment requests or a more advanced booking system.'],
   ['Can I update my website later?', 'Yes. Updates can be arranged separately or through an optional maintenance plan.'],

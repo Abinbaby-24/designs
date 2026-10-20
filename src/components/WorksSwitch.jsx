@@ -21,13 +21,13 @@ const PHOTOS = {
 // `label` is the screen-reader description. `poster` is an optional preview image.
 // Leave `src` as "" to show a placeholder until the video is ready.
 const VIDEOS = {
-  weddings: { src: "/assets/about-weddings.mp4", poster: "", label: "Wedding invitation website preview" },
+  weddings: { src: "/assets/man.mp4", poster: "", label: "Wedding invitation website preview" },
   companies: { src: "/assets/man.mp4", poster: "", label: "A man writing on glass" },
 };
 
 // About text (shared by both tabs, taken from your About.jsx)
 const ABOUT = {
-  kicker: "Why EMERALD DESIGNS",
+  kicker: "Why EMERALD",
   text: "Emerald is a web development brand focused on creating clean, modern digital experiences. Every project starts with understanding your goals and ends with a website built to work across devices.",
   points: [
     "Responsive on mobile, tablet, and desktop",
@@ -161,10 +161,9 @@ function AboutVideo({ src, poster, label }) {
 
 const fmt = (n) => "₹" + n.toLocaleString("en-IN");
 
-// Price card: fades in with a gold shine and the price counts up once it scrolls into view.
+// Price card: fades in with a gold shine once it scrolls into view.
 function PricingPlan({ plan }) {
   const cardRef = useRef(null);
-  const priceRef = useRef(null);
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
@@ -174,21 +173,13 @@ function PricingPlan({ plan }) {
       setShown(true);
       return undefined;
     }
-    let raf;
     const io = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
       io.disconnect();
       setShown(true);
-      const start = performance.now() + 400;
-      const tick = (t) => {
-        const k = Math.min(1, Math.max(0, (t - start) / 1100));
-        if (priceRef.current) priceRef.current.textContent = fmt(Math.round(plan.amount * (1 - Math.pow(1 - k, 3))));
-        if (k < 1) raf = requestAnimationFrame(tick);
-      };
-      raf = requestAnimationFrame(tick);
     }, { threshold: 0.35 });
     io.observe(el);
-    return () => { io.disconnect(); cancelAnimationFrame(raf); };
+    return () => io.disconnect();
   }, [plan.amount]);
 
   return (
@@ -197,7 +188,7 @@ function PricingPlan({ plan }) {
         <img className="rd-plan-img" src={`${base}assets/${plan.img}.png`} alt={plan.name} onError={(e) => { e.currentTarget.style.display = "none"; }} />
       </h4>
       <p className="rd-plan-tag">{plan.tag}</p>
-      <div className="rd-price"><b ref={priceRef}>{fmt(plan.amount)}</b><small>one-time</small></div>
+      <div className="rd-price"><b>{fmt(plan.amount)}</b><small>one-time</small></div>
       <hr className="rd-rule" />
       <ul className="rd-plan-list">
         {plan.features.map((f) => <li key={f}>{f}</li>)}

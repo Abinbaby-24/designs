@@ -1,0 +1,68 @@
+/* Enquiry form that opens from the Contact button. Classes start with "ct-" so nothing else is affected. */
+.ct-overlay{
+  position:fixed; inset:0; z-index:1000; display:flex; overflow:auto; padding:16px;
+  background:rgba(20,35,59,.55); backdrop-filter:blur(4px);
+  font-family:Inter,system-ui,sans-serif;
+}
+.ct-overlay *{ box-sizing:border-box; }
+.ct-dialog{
+  position:relative; width:min(460px,100%); margin:auto;
+  background:#fffdfb; color:#14233b; border-radius:22px; padding:32px 26px 26px;
+  box-shadow:0 24px 60px rgba(20,35,59,.35);
+  animation:ct-pop .3s cubic-bezier(.2,.8,.2,1);
+}
+@keyframes ct-pop{ from{ opacity:0; transform:translateY(14px) scale(.97); } }
+.ct-x{
+  position:absolute; top:10px; right:12px; width:38px; height:38px; border:0; border-radius:50%;
+  background:none; color:#6b6470; font-size:28px; line-height:1; cursor:pointer;
+}
+.ct-x:hover{ background:rgba(20,35,59,.07); }
+.ct-x:focus-visible{ outline:3px solid #e6c06b; outline-offset:1px; }
+.ct-dialog h3{ font-family:"Playfair Display",Georgia,serif; font-weight:600; font-size:26px; line-height:1.2; margin:0 36px 6px 0; }
+.ct-sub{ margin:0 0 22px; color:#6b6470; font-size:14.5px; line-height:1.5; }
+
+.ct-field{ display:block; margin:0 0 16px; padding:0; border:0; min-width:0; }
+.ct-field > span, .ct-field > legend{ display:block; padding:0; margin-bottom:7px; font-weight:600; font-size:14px; }
+.ct-field input[type="text"], .ct-field input[type="tel"], .ct-field input[type="date"]{
+  width:100%; padding:13px 14px; font:inherit; font-size:16px; color:inherit;
+  background:#fff; border:1.5px solid rgba(20,35,59,.2); border-radius:12px;
+  transition:border-color .2s, box-shadow .2s;
+}
+.ct-field input:focus{ outline:0; border-color:#7a1f3d; box-shadow:0 0 0 3px rgba(230,192,107,.55); }
+.ct-field input[aria-invalid="true"]{ border-color:#b3261e; }
+.ct-err{ display:block; margin-top:6px; color:#b3261e; font-size:13px; font-style:normal; }
+
+.ct-opts{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.ct-opt{
+  position:relative; display:flex; align-items:center; justify-content:center; padding:13px 10px;
+  border:1.5px solid rgba(20,35,59,.2); border-radius:999px; background:#fff;
+  font-weight:600; font-size:15px; cursor:pointer; transition:background-color .2s, color .2s, border-color .2s;
+}
+.ct-opt input{ position:absolute; opacity:0; inset:0; margin:0; cursor:pointer; }
+.ct-opt.is-on{ background:#7a1f3d; border-color:#7a1f3d; color:#fff; }
+.ct-opt:focus-within{ outline:3px solid #e6c06b; outline-offset:2px; }
+.ct-in{ animation:ct-in .25s ease; }
+@keyframes ct-in{ from{ opacity:0; transform:translateY(-6px); } }
+
+.ct-submit{
+  display:flex; align-items:center; justify-content:center; width:100%; margin-top:6px; padding:14px 22px;
+  border:0; border-radius:999px; background:#7a1f3d; color:#fff; font:600 16px/1.2 Inter,system-ui,sans-serif;
+  text-decoration:none; cursor:pointer; transition:transform .2s ease, background-color .2s ease;
+}
+.ct-submit:hover{ transform:translateY(-2px); background:#8d2548; }
+.ct-submit:focus-visible{ outline:3px solid #e6c06b; outline-offset:3px; }
+
+.ct-done{ text-align:center; padding-top:6px; }
+.ct-done h3{ margin-right:0; }
+.ct-done p{ margin:0 0 20px; color:#6b6470; line-height:1.6; }
+.ct-done p b{ color:#14233b; }
+.ct-link{ display:block; margin:14px auto 0; border:0; background:none; color:#7a1f3d; font:600 15px Inter,system-ui,sans-serif; cursor:pointer; text-decoration:underline; text-underline-offset:3px; }
+
+@media (max-width:480px){
+  .ct-dialog{ padding:28px 18px 20px; }
+  .ct-dialog h3{ font-size:23px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .ct-dialog,.ct-in{ animation:none; }
+  .ct-submit,.ct-opt,.ct-field input{ transition:none; }
+}
