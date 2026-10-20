@@ -14,9 +14,9 @@ const VENUE = { name: "Grand Pearl Convention Centre", place: "Kozhikode, Kerala
 
 // Photos: use a file in your public folder ("/fathima-hero.jpg") or a web link.
 // Leave "" to show the built-in illustration.
-const HERO_PHOTO = "/public/assets/fathima.png";
-const STORY_PHOTO = "/public/assets/fathima2.png";
-const GALLERY_PHOTOS = ["", "", "", "", "", ""];
+const HERO_PHOTO = "/assets/fathima.png";
+const STORY_PHOTO = "/assets/fathima2.png";
+const GALLERY_PHOTOS = ["/assets/fathima2.png", "/assets/fathima2.png", "/assets/fathima2.png", "/assets/fathima2.png", "", ""];
 
 const EVENTS = [
   { name: "Mehendi", date: "June 13, 2027", time: "6:00 PM", note: "An evening of henna, laughter and music with family." },

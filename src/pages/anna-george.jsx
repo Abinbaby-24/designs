@@ -5,9 +5,9 @@ import "./anna-george.css";
 // ── PHOTOS ── change a link to replace a photo.
 // Use a file in your public folder ("/anna.png") or a web link ("https://...").
 // Leave "" to keep the illustration.
-const HERO_PHOTO = "/public/assets/anna.png";
-const STORY_PHOTO = "/public/assets/anna4.png";
-const GALLERY_PHOTOS = ["/public/assets/anna5.png", "/public/assets/anna3.png", "/public/assets/anna4.png", "/public/assets/anna2.png", "/public/assets/anna.png", "/public/assets/anna2.png", "/public/assets/anna.png", "/public/assets/anna3.png"];
+const HERO_PHOTO = "/assets/anna.png";
+const STORY_PHOTO = "/assets/anna4.png";
+const GALLERY_PHOTOS = ["/assets/anna5.png", "/assets/anna3.png", "/assets/anna4.png", "/assets/anna2.png", "/assets/anna.png", "/assets/anna2.png", "/assets/anna.png", "/assets/anna3.png"];
 
 const TINTS = [
   ["#f6f1e6", "#d8c595"], ["#eef2ec", "#a9bba4"], ["#f8f5ef", "#c9b27a"], ["#edf1f6", "#a9b8c8"],
