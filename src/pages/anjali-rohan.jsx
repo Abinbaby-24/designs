@@ -12,8 +12,8 @@ const VENUE = { name: "Sree Krishna Temple", place: "Thrissur, Kerala" };
 
 // Photos: use a file in your public folder ("/anjali-hero.jpg") or a web link.
 // Leave "" to show the built-in illustration.
-const HERO_PHOTO = "/assets/anjali.png";
-const STORY_PHOTO = "/assets/anjali7.png";
+const HERO_PHOTO = "/assets/anjali.jpg";
+const STORY_PHOTO = "/assets/anjali.jpg";
 const GALLERY_PHOTOS = ["/assets/anjali.png", "/assets/anjali3.png", "/assets/anjali4.png", "/assets/anjali5.png", "/assets/anjali6.png", "/assets/anjali2.png"];
 
 const EVENTS = [

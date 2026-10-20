@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import "./WorksSwitch.css";
 
@@ -7,8 +7,8 @@ import "./WorksSwitch.css";
 // e.g. public/assets/anna.png  →  "/assets/anna.png".
 // You can also use a web link ("https://..."). Leave "" to show the gradient instead.
 const PHOTOS = {
-  anjaliRohan: "/assets/anjali.png",
-  annaGeorge: "/assets/anna.png",
+  anjaliRohan: "/assets/anjali.jpg",
+  annaGeorge: "/assets/anna.jpg",
   fathimaRizwan: "/assets/fathima.png",
   rose: "/assets/rose.png",
   landingPage: "",
@@ -78,36 +78,57 @@ const ICONS = {
 
 const RingIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="12" cy="15" r="6" /><path d="M9 4h6l2 3-5 3-5-3z" />
+    <g className="rd-ring">
+      <circle cx="12" cy="15" r="6" /><path d="M9 4h6l2 3-5 3-5-3z" />
+    </g>
+    <path className="rd-spark" d="M20 2v4M18 4h4" />
   </svg>
 );
 const BuildingIcon = () => (
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16M14 10h5a1 1 0 0 1 1 1v10M2 21h20M8 8h2M8 12h2M8 16h2" />
+    <path d="M4 21V5a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v16M14 10h5a1 1 0 0 1 1 1v10M2 21h20" />
+    <path className="rd-fl rd-fl-1" d="M8 8h2" />
+    <path className="rd-fl rd-fl-2" d="M8 12h2" />
+    <path className="rd-fl rd-fl-3" d="M8 16h2" />
   </svg>
 );
 
 export default function WorksSwitch() {
   const [active, setActive] = useState("weddings");
+  const [leave, setLeave] = useState(null); // { key, dir } while the old panel slides out
+  const activeRef = useRef("weddings");
+  const leaveTimer = useRef(null);
   const rootRef = useRef(null);
   const tabRefs = useRef({});
+
+  // Switch tabs and remember which way we moved (for the slide direction)
+  const go = useCallback((key) => {
+    const cur = activeRef.current;
+    if (key === cur) return;
+    activeRef.current = key;
+    setActive(key);
+    setLeave({ key: cur, dir: KEYS.indexOf(key) > KEYS.indexOf(cur) ? 1 : -1 });
+    clearTimeout(leaveTimer.current);
+    leaveTimer.current = setTimeout(() => setLeave(null), 600);
+  }, []);
+  useEffect(() => () => clearTimeout(leaveTimer.current), []);
 
   // Supports links like href="#works-companies" from anywhere (e.g. the hero buttons)
   useEffect(() => {
     const fromHash = () => {
       const m = window.location.hash.match(/^#works-(weddings|companies)$/);
       if (m) {
-        setActive(m[1]);
+        go(m[1]);
         rootRef.current?.scrollIntoView({ behavior: "smooth" });
       }
     };
     fromHash();
     window.addEventListener("hashchange", fromHash);
     return () => window.removeEventListener("hashchange", fromHash);
-  }, []);
+  }, [go]);
 
   const choose = (key, { focus = false } = {}) => {
-    setActive(key);
+    go(key);
     try { window.history.replaceState(null, "", `#works-${key}`); } catch { /* ignore */ }
     if (focus) tabRefs.current[key]?.focus();
   };
@@ -146,8 +167,14 @@ export default function WorksSwitch() {
           ))}
         </div>
 
-        {KEYS.map((key) => (
-          <div key={key} className="rd-panel" id={`rd-panel-${key}`} role="tabpanel" aria-labelledby={`rd-tab-${key}`} hidden={active !== key}>
+        <div className="rd-panels">
+        {KEYS.map((key) => {
+          const isActive = active === key;
+          const isLeaving = leave?.key === key;
+          const inCls = isActive && leave ? ` rd-in-${leave.dir > 0 ? "r" : "l"}` : "";
+          const outCls = isLeaving ? ` rd-out-${leave.dir > 0 ? "l" : "r"}` : "";
+          return (
+          <div key={key} className={`rd-panel${inCls}${outCls}`} id={`rd-panel-${key}`} role="tabpanel" aria-labelledby={`rd-tab-${key}`} hidden={!isActive && !isLeaving}>
             <div className="rd-grid">
               {WORKS[key].items.map((w) => {
                 const inner = (
@@ -168,10 +195,12 @@ export default function WorksSwitch() {
             </div>
             <div className="rd-more"><a href={WORKS[key].cta.href}>{WORKS[key].cta.label}</a></div>
           </div>
-        ))}
+          );
+        })}
+        </div>
 
         {/* Services: changes with the selected tab. The header's "Services" link points here. */}
-        <div className="rd-services" id="services" key={active}>
+        <div className={`rd-services${leave ? ` rd-in-${leave.dir > 0 ? "r" : "l"}` : ""}`} id="services" key={active}>
           <h3 className="rd-svc-title">{svc.title}</h3>
           <p className="rd-svc-sub">{svc.sub}</p>
           <div className="rd-svc-grid">

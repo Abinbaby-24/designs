@@ -6,7 +6,7 @@ import "./anna-george.css";
 // Use a file in your public folder ("/anna.png") or a web link ("https://...").
 // Leave "" to keep the illustration.
 const HERO_PHOTO = "/assets/anna.png";
-const STORY_PHOTO = "/assets/anna4.png";
+const STORY_PHOTO = "/assets/anna.jpg";
 const GALLERY_PHOTOS = ["/assets/anna5.png", "/assets/anna3.png", "/assets/anna4.png", "/assets/anna2.png", "/assets/anna.png", "/assets/anna2.png", "/assets/anna.png", "/assets/anna3.png"];
 
 const TINTS = [
