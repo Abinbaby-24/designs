@@ -20,9 +20,9 @@ function Home() {
       <main>
         <Hero />
         
-        <About />
-        <Projects />
-        <Pricing />
+        
+        
+       
         <FAQ />
         <Contact />
       </main>

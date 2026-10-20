@@ -15,6 +15,31 @@ const PHOTOS = {
   customWebApp: "",
 };
 
+// ── ABOUT VIDEOS ── one video per tab (they autoplay muted and loop, like your old About section).
+// Put the video files in `public/assets`, then set the path here (WITHOUT "public"),
+// e.g. public/assets/man.mp4  →  "/assets/man.mp4".
+// `label` is the screen-reader description. `poster` is an optional preview image.
+// Leave `src` as "" to show a placeholder until the video is ready.
+const VIDEOS = {
+  weddings: { src: "/assets/about-weddings.mp4", poster: "", label: "Wedding invitation website preview" },
+  companies: { src: "/assets/man.mp4", poster: "", label: "A man writing on glass" },
+};
+
+// About text (shared by both tabs, taken from your About.jsx)
+const ABOUT = {
+  kicker: "Why EMERALD DESIGNS",
+  text: "Emerald is a web development brand focused on creating clean, modern digital experiences. Every project starts with understanding your goals and ends with a website built to work across devices.",
+  points: [
+    "Responsive on mobile, tablet, and desktop",
+    "Modern, brand-focused visual design",
+    "Performance and usability in mind",
+    "Clear communication from start to launch",
+  ],
+};
+
+// Used for the pricing images: files in public/assets/ (ring.png, laptop.png)
+const base = import.meta.env.BASE_URL;
+
 // Replace these with your real projects and services.
 // Items with `to` open an internal page (React Router); others use `href`.
 const WORKS = {
@@ -37,6 +62,21 @@ const WORKS = {
         { icon: "video", title: "Video Invites", text: "Short animated invitation videos for WhatsApp and social." },
       ],
     },
+    pricing: {
+      amount: 4999, name: "Wedding Website", img: "ring",
+      sub: "A simple one-time package for your wedding website.",
+      tag: "A beautiful, shareable invitation website for your big day.",
+      features: [
+        "Custom-designed wedding website",
+        "Countdown to the big day",
+        "Schedule for every ceremony and event",
+        "RSVP form with replies on WhatsApp",
+        "Photo gallery for your pre-wedding shoot",
+        "Venue map & directions",
+        "Share in one tap on WhatsApp & social",
+        "2 rounds of revisions",
+      ],
+    },
   },
   companies: {
     cta: { label: "Explore business themes", href: "#pricing" },
@@ -55,6 +95,20 @@ const WORKS = {
         { icon: "search", title: "SEO & Speed", text: "Get found on Google, and load quickly on phones." },
         { icon: "app", title: "Custom Web Apps", text: "Dashboards and tools shaped around your team." },
         { icon: "support", title: "Maintenance & Support", text: "Updates, fixes and hosting help when you need it." },
+      ],
+    },
+    pricing: {
+      amount: 9999, name: "Company Website", img: "laptop",
+      sub: "A simple one-time package for your business website.",
+      tag: "A full-featured website or web app for ambitious brands.",
+      features: [
+        "Up to 12 pages, fully custom UI",
+        "Advanced online booking system",
+        "Online catalog or e-commerce setup",
+        "Google Analytics & Search Console",
+        "Advanced SEO & schema markup",
+        "30 days of free post-launch support",
+        "Priority support & 3 rounds of revisions",
       ],
     },
   },
@@ -92,6 +146,66 @@ const BuildingIcon = () => (
     <path className="rd-fl rd-fl-3" d="M8 16h2" />
   </svg>
 );
+
+// About video: autoplays muted and loops; paused for visitors who prefer reduced motion.
+function AboutVideo({ src, poster, label }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) ref.current?.pause();
+  }, [src]);
+  if (!src) return <div className="rd-video-empty">Add your video in VIDEOS at the top of WorksSwitch.jsx</div>;
+  return (
+    <video ref={ref} src={src} poster={poster || undefined} autoPlay muted loop playsInline preload="metadata" aria-label={label} />
+  );
+}
+
+const fmt = (n) => "₹" + n.toLocaleString("en-IN");
+
+// Price card: fades in with a gold shine and the price counts up once it scrolls into view.
+function PricingPlan({ plan }) {
+  const cardRef = useRef(null);
+  const priceRef = useRef(null);
+  const [shown, setShown] = useState(false);
+
+  useEffect(() => {
+    const el = cardRef.current;
+    if (!el) return undefined;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches || !("IntersectionObserver" in window)) {
+      setShown(true);
+      return undefined;
+    }
+    let raf;
+    const io = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      io.disconnect();
+      setShown(true);
+      const start = performance.now() + 400;
+      const tick = (t) => {
+        const k = Math.min(1, Math.max(0, (t - start) / 1100));
+        if (priceRef.current) priceRef.current.textContent = fmt(Math.round(plan.amount * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) raf = requestAnimationFrame(tick);
+      };
+      raf = requestAnimationFrame(tick);
+    }, { threshold: 0.35 });
+    io.observe(el);
+    return () => { io.disconnect(); cancelAnimationFrame(raf); };
+  }, [plan.amount]);
+
+  return (
+    <article ref={cardRef} className={`rd-plan${shown ? " is-in" : ""}`}>
+      <h4 className="rd-plan-name">
+        <img className="rd-plan-img" src={`${base}assets/${plan.img}.png`} alt={plan.name} onError={(e) => { e.currentTarget.style.display = "none"; }} />
+      </h4>
+      <p className="rd-plan-tag">{plan.tag}</p>
+      <div className="rd-price"><b ref={priceRef}>{fmt(plan.amount)}</b><small>one-time</small></div>
+      <hr className="rd-rule" />
+      <ul className="rd-plan-list">
+        {plan.features.map((f) => <li key={f}>{f}</li>)}
+      </ul>
+      <a className="rd-plan-btn" href="#contact">Choose {plan.name} <span aria-hidden="true">↗</span></a>
+    </article>
+  );
+}
 
 export default function WorksSwitch() {
   const [active, setActive] = useState("weddings");
@@ -141,6 +255,9 @@ export default function WorksSwitch() {
   };
 
   const svc = WORKS[active].services;
+  const plan = WORKS[active].pricing;
+  const vid = VIDEOS[active];
+  const slideCls = leave ? ` rd-in-${leave.dir > 0 ? "r" : "l"}` : "";
 
   return (
     <section ref={rootRef} className={`rd-works is-${active}`} id="works" aria-labelledby="rd-works-title">
@@ -214,6 +331,35 @@ export default function WorksSwitch() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* About: same text, a different video for each tab. */}
+        <div className={`rd-about${slideCls}`} id="about" key={`about-${active}`}>
+          <div className="rd-about-grid">
+            <div className="rd-video">
+              <AboutVideo src={vid.src} poster={vid.poster} label={vid.label} />
+            </div>
+            <div className="rd-about-text">
+              <div className="rd-kicker">{ABOUT.kicker}</div>
+              <h3>Small details.<br /><em>Big impression.</em></h3>
+              <p>{ABOUT.text}</p>
+              <ul className="rd-checklist">
+                {ABOUT.points.map((p) => <li key={p}>{p}</li>)}
+              </ul>
+              <a className="rd-about-btn" href="#contact">Let’s build something <span aria-hidden="true">↗</span></a>
+            </div>
+          </div>
+        </div>
+
+        {/* Pricing: wedding plan on the Weddings tab, company plan on the Companies tab. */}
+        <div className={`rd-pricing${slideCls}`} id="pricing" key={`pricing-${active}`}>
+          <h3 className="rd-svc-title">BASIC <em>PLANS</em></h3>
+          <p className="rd-svc-sub">{plan.sub}</p>
+          <PricingPlan plan={plan} />
+          <p className="rd-note">
+            Domain, hosting, paid third-party services, and optional maintenance are charged separately. Need something custom?{" "}
+            <a href="#contact">Let’s talk.</a>
+          </p>
         </div>
       </div>
     </section>

@@ -1,40 +1,27 @@
 const base = import.meta.env.BASE_URL
 
+// `key` is kept as gold / diamond so your existing CSS (.plan.gold, .plan.diamond) still applies.
+// `img` is the title image inside /assets.
 const plans = [
   {
-    key: 'silver', name: 'Silver', price: '₹9,999',
-    tag: 'A clean, professional online presence for small businesses.',
+    key: 'gold', img: 'ring', name: 'Wedding Website', price: '₹4,999', featured: true,
+    tag: 'A beautiful, shareable invitation website for your big day.',
     features: [
-      'Up to 5 pages (Home, About, Services, Gallery, Contact)',
-      'Responsive on mobile, tablet & desktop',
-      'Contact form & WhatsApp chat button',
-      'Google Maps & social media links',
-      'Basic SEO setup',
-      'Delivery in 3–5 days',
-      '1 round of revisions',
-    ],
-    btn: 'btn-ghost',
-  },
-  {
-    key: 'gold', name: 'Gold', price: '₹14,999', featured: true,
-    tag: 'A custom-designed website built to attract and convert customers.',
-    features: [
-      'Everything in Silver, plus:',
-      'Up to 8 pages with custom design',
-      'WhatsApp appointment request form',
-      'Photo gallery / portfolio section',
-      'Speed & performance optimization',
-      'Instagram feed integration',
-      'Enhanced on-page SEO',
+      'Custom-designed wedding website',
+      'Countdown to the big day',
+      'Schedule for every ceremony and event',
+      'RSVP form with replies on WhatsApp',
+      'Photo gallery for your pre-wedding shoot',
+      'Venue map & directions',
+      'Share in one tap on WhatsApp & social',
       '2 rounds of revisions',
     ],
     btn: 'btn-primary', arrow: true,
   },
   {
-    key: 'diamond', name: 'Diamond', price: '₹20,999',
+    key: 'diamond', img: 'laptop', name: 'Company Website', price: '₹9,999',
     tag: 'A full-featured website or web app for ambitious brands.',
     features: [
-      'Everything in Gold, plus:',
       'Up to 12 pages, fully custom UI',
       'Advanced online booking system',
       'Online catalog or e-commerce setup',
@@ -53,7 +40,7 @@ export default function Pricing() {
       <div className="wrap">
         <div className="section-head">
           <div className="kicker">Pricing plans</div>
-          <h2>Explore <em>plans.</em></h2>
+          <h2>BASIC <em>PLANS</em></h2>
           <p>Simple one-time packages. Pick the one that fits your business today and grow from there.</p>
         </div>
         <div className="plans">
@@ -61,14 +48,14 @@ export default function Pricing() {
             <article className={`plan ${p.key}${p.featured ? ' featured' : ''}`} key={p.key}>
               {p.featured && <span className="badge">Most popular</span>}
               <h3 className="plan-name">
-                <img className="plan-title-img" src={`${base}assets/${p.key}.png`} alt={p.name} />
+                <img className="plan-title-img" src={`${base}assets/${p.img}.png`} alt={p.name} />
               </h3>
               <p className="plan-tag">{p.tag}</p>
               <div className="price"><b>{p.price}</b><small>one-time</small></div>
               <hr />
               <ul>
-                {p.features.map((f, i) => (
-                  <li key={f} className={i === 0 && f.startsWith('Everything') ? 'inherit' : undefined}>{f}</li>
+                {p.features.map(f => (
+                  <li key={f}>{f}</li>
                 ))}
               </ul>
               <a className={`btn ${p.btn}`} href="#contact">Choose {p.name}{p.arrow && <> <span>↗</span></>}</a>
